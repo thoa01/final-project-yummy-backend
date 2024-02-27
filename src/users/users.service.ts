@@ -1,26 +1,40 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Injectable } from '@nestjs/common'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
+import { User } from './schemas/user.schema'
+import { Model } from 'mongoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { genSaltSync, hashSync } from 'bcryptjs'
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {} //tiêm cái model đã thông báo bởi id (User.name) //dùng User model ở trong service
+
+  hashPassword = (plainPassword: string) => {
+    const salt = genSaltSync(10)
+    const hash = hashSync(plainPassword, salt)
+    return hash
+  }
+
+  async create(createUserDto: CreateUserDto) {
+    const hashPassword = this.hashPassword(createUserDto.password)
+    const formattedData = { ...createUserDto, password: hashPassword }
+    return await this.userModel.create(formattedData)
   }
 
   findAll() {
-    return `This action returns all users`;
+    return `This action returns all users`
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return `This action returns a #${id} user`
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return `This action updates a #${id} user ${updateUserDto}`
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return `This action removes a #${id} user`
   }
 }
