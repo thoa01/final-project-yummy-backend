@@ -13,7 +13,7 @@ import { AuthModule } from './auth/auth.module'
         uri: configService.get<string>('MONGO_URL')
       }),
       inject: [ConfigService]
-    }),
+    }), //.env
     ConfigModule.forRoot({
       isGlobal: true
     }),
