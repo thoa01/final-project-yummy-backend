@@ -31,8 +31,12 @@ export class UsersService {
     return this.userModel.findOne({ _id: id })
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user ${updateUserDto}`
+  async update(updateUserDto: UpdateUserDto) {
+    try {
+      return await this.userModel.updateOne({ _id: updateUserDto._id }, { ...updateUserDto })
+    } catch (error) {
+      return error
+    }
   }
 
   remove(id: number) {
