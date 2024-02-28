@@ -71,3 +71,20 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+service access model(db) --> inject model in service
+
+service access other service --> inject service in service, thêm vào import cái module (nhớ là moule này phải được export)
+ex: auth service muốn gọi user service.
+(1) inject user service vào auth service
+(2) import user module vào auth service
+(3) user module đã được export từ user module
+
+provide import 1 service
+import import 1 module
+
+hàm validate tự động được gọi khi login
+
+route --> Guard (nếu true thì --> controller)
+
+UseGuards(app.controller) -> LocalAuthGuard(local-auth.guard.ts) (kế thừa từ local.strategy.ts) -> validate(local.strategy.ts)
