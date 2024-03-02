@@ -26,7 +26,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     //khi có lỗi vs token (1: kh truyền token, 2: token không hợp lệ (hết hạn or kh đúng định dạng))
     // You can throw an exception based on either "info" or "err" arguments
     if (err || !user) {
-      throw err || new UnauthorizedException()
+      throw err || new UnauthorizedException('token ko hợp lệ or ko có token ở bearer token ở header request')
     }
     return user
   }

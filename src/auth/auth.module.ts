@@ -7,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtStrategy } from './passport/jwt.strategy'
 import ms from 'ms'
+import { AppController } from 'src/app.controller'
+import { AuthController } from './auth.controller'
 
 @Module({
   //connect config service
@@ -25,6 +27,7 @@ import ms from 'ms'
       inject: [ConfigService]
     })
   ], //import PassportModule để có thể tư động chạy hàm validate(local.strategy.ts) khi login
-  exports: [AuthService]
+  exports: [AuthService],
+  controllers: [AuthController]
 })
 export class AuthModule {}
