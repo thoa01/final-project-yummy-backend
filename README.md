@@ -99,3 +99,6 @@ Nest is [MIT licensed](LICENSE).
    (2) server(nestjs) biết đang sử dụng passport-local
    (3) passport-local: check xem user hợp lệ hay không (query dữ liệu trong db)
    (4) nếu hợp lệ --> có access_token (dùng passport-jwt)
+9. api-query-params: build query --> sang dạng moongose
+
+10. cors: giúp server quản lý ai có quyền gọi apis của nó
