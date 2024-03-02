@@ -18,7 +18,7 @@ export class AppController {
   @UseGuards(LocalAuthGuard) //check xem user login chưa, nếu chưa thì login, nếu login (thông qua passport) rồi thì gán user(trong validate) vào req.user
   @Post('/login')
   handleLogin(@Request() req) {
-    return this.authService.login(req.user) //user của validate(local.strategy.ts) trả về
+    return this.authService.login(req.user) //user của validate(local.strategy.ts) trả về //login tạo access_token
   }
 
   @Get('profile')
