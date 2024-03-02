@@ -19,7 +19,6 @@ export class AppController {
     return this.authService.login(req.user) //user của validate(local.strategy.ts) trả về
   }
 
-  @UseGuards(JwtAuthGuard) // ko truyền lên jwt thì kh thể truy cập
   @Get('profile')
   getProfile(@Request() req) {
     return req.user
