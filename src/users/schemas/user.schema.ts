@@ -29,12 +29,6 @@ export class User {
 
   @Prop()
   role: Role
-
-  @Prop()
-  createdAt: Date
-
-  @Prop()
-  updatedAt: Date
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
