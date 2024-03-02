@@ -72,24 +72,30 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 
-service access model(db) --> inject model in service
+1. service access model(db) --> inject model in service
 
-service access other service --> inject service in service, thêm vào import cái module (nhớ là module này phải được export)
-ex: auth service muốn gọi user service.
-(1) inject user service vào auth service
-(2) import user module vào auth service
-(3) user module đã được export từ user module
+2. service access other service --> inject service in service, thêm vào import cái module (nhớ là module này phải được export)
+   ex: auth service muốn gọi user service.
+   (1) inject user service vào auth service
+   (2) import user module vào auth service
+   (3) user module đã được export từ user module
 
-controller access other service --> khai báo other service in controller, khai báo cái gì thì phải export cái đó
-ex: app.cotroller muốn gọi auth service
-(1) khai báo auth service trong app controller
-(2) auth service đã được export từ auth module
+3. controller access other service --> khai báo other service in controller, khai báo cái gì thì phải export cái đó
+   ex: app.cotroller muốn gọi auth service
+   (1) khai báo auth service trong app controller
+   (2) auth service đã được export từ auth module
 
-provide import 1 service
-import import 1 module
+4. provide import 1 service
+   import import 1 module
 
-hàm validate tự động được gọi khi login
+5. hàm validate (local.strategy.ts) tự động được gọi khi login
 
-route --> Guard (nếu true thì --> controller)
+6. route --> Guard (nếu true thì --> controller)
 
-UseGuards(app.controller) -> LocalAuthGuard(local-auth.guard.ts) (kế thừa từ local.strategy.ts) -> validate(local.strategy.ts)
+7. UseGuards(app.controller) -> LocalAuthGuard(local-auth.guard.ts) (kế thừa từ local.strategy.ts) -> validate(local.strategy.ts)
+
+8. passport-local: check xem user hợp lệ hay không
+   (1) client request(gửi lên username&passport)
+   (2) server(nestjs) biết đang sử dụng passport-local
+   (3) passport-local: check xem user hợp lệ hay không (query dữ liệu trong db)
+   (4) nếu hợp lệ --> có access_token (dùng passport-jwt)
