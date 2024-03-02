@@ -5,9 +5,11 @@ import { PassportModule } from '@nestjs/passport'
 import { LocalStrategy } from './passport/local.strategy'
 import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { JwtStrategy } from './passport/jwt.strategy'
 
 @Module({
-  providers: [AuthService, LocalStrategy], //thêm LocalStrategy để đăng nhập với email, pass
+  //connect config service
+  providers: [AuthService, LocalStrategy, JwtStrategy], //thêm LocalStrategy để đăng nhập với email, pass //thêm  để biết giải mã jwt
   imports: [
     UsersModule,
     PassportModule,

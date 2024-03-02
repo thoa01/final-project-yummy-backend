@@ -74,11 +74,16 @@ Nest is [MIT licensed](LICENSE).
 
 service access model(db) --> inject model in service
 
-service access other service --> inject service in service, thêm vào import cái module (nhớ là moule này phải được export)
+service access other service --> inject service in service, thêm vào import cái module (nhớ là module này phải được export)
 ex: auth service muốn gọi user service.
 (1) inject user service vào auth service
 (2) import user module vào auth service
 (3) user module đã được export từ user module
+
+controller access other service --> khai báo other service in controller, khai báo cái gì thì phải export cái đó
+ex: app.cotroller muốn gọi auth service
+(1) khai báo auth service trong app controller
+(2) auth service đã được export từ auth module
 
 provide import 1 service
 import import 1 module
