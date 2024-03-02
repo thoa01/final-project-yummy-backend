@@ -23,13 +23,6 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard'
     AuthModule
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      //dùng JwtAuthGuard global, bảo vệ tất cả route // ko truyền lên jwt thì kh thể truy cập
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard
-    }
-  ]
+  providers: [AppService]
 })
 export class AppModule {}
