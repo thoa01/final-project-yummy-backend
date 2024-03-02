@@ -10,6 +10,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector)
   app.useGlobalGuards(new JwtAuthGuard(reflector)) //dùng JwtAuthGuard global, bảo vệ tất cả route // ko truyền lên jwt thì kh thể truy cập
   app.useGlobalPipes(new ValidationPipe()) //config to data validation in dto
+  app.enableCors({ origin: '*', methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', preflightContinue: false }) //config cors
   await app.listen(configService.get('PORT')) //how to use .env in main (special)
 }
 bootstrap()
