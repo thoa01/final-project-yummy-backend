@@ -34,6 +34,10 @@ export class UsersService {
     return newRegister
   }
 
+  updateRefreshTokenByIdUser = async (refreshToken: string, _id: string) => {
+    return await this.userModel.updateOne({ _id }, { refreshToken })
+  }
+
   findAll() {
     return `This action returns all users`
   }
