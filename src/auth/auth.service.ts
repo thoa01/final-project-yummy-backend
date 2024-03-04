@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt'
 import { RegisterUserDto } from 'src/users/dto/create-user.dto'
 import { IUser } from 'src/users/users.interface'
 import ms from 'ms'
+import { Response } from 'express'
 
 @Injectable()
 export class AuthService {
@@ -26,7 +27,7 @@ export class AuthService {
     return null
   }
 
-  async login(user: IUser) {
+  async login(user: IUser, response: Response) {
     const { _id, name, email, role } = user
     const payload = {
       sub: 'token login', //description
@@ -38,9 +39,13 @@ export class AuthService {
     }
 
     const refreshToken = this.createRefreshToken(payload)
+    await this.usersService.updateRefreshTokenByIdUser(refreshToken, _id) //save refreshToken in db
+    response.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      maxAge: ms(this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRE'))
+    }) //set refreshToken as cookie //HttpOnly: true chỈ đọc được ở server, client không lấy được //maxAge: milisecond, hết hạn auto xóa cookie trên client
     return {
       accessToken: this.jwtService.sign(payload),
-      refreshToken,
       user: { _id, name, email, role }
     }
   }
@@ -57,7 +62,7 @@ export class AuthService {
   createRefreshToken = (payload) => {
     const refreshToken = this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
-      expiresIn: ms(this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRE'))/1000
+      expiresIn: ms(this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRE')) / 1000
     })
     return refreshToken
   }
