@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { HydratedDocument } from 'mongoose'
+import mongoose, { HydratedDocument } from 'mongoose'
 import { Role } from 'src/enums/role.enum'
 
 export type UserDocument = HydratedDocument<User>
@@ -13,10 +13,10 @@ export class User {
   password: string
 
   @Prop()
-  name: string
+  fullname: string
 
   @Prop()
-  phone: string
+  phoneNumber: string
 
   @Prop()
   address: string
@@ -24,11 +24,41 @@ export class User {
   @Prop()
   age: number
 
-  @Prop()
+  @Prop({})
   dateOfBirth: Date
 
   @Prop()
   role: Role
+
+  @Prop()
+  refreshToken: string
+
+  @Prop({ type: Object })
+  createdBy: {
+    _id: mongoose.Schema.Types.ObjectId
+    email: string
+  }
+
+  @Prop()
+  createdAt: Date
+
+  @Prop({ type: Object })
+  updatedBy: {
+    _id: mongoose.Schema.Types.ObjectId
+    email: string
+  }
+
+  @Prop()
+  updatedAt: Date
+
+  @Prop({ type: Object })
+  deletedBy: {
+    _id: mongoose.Schema.Types.ObjectId
+    email: string
+  }
+
+  @Prop()
+  isDeleted: boolean
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
