@@ -97,4 +97,10 @@ export class AuthService {
       throw new BadRequestException('Refresh đã hết hạn hoặc không hợp lệ. Hãy login')
     }
   }
+
+  logout = async (response: Response, user: IUser) => {
+    await this.usersService.updateRefreshTokenByIdUser('', user._id)
+    response.clearCookie('refreshToken')
+    return 'ok'
+  }
 }
