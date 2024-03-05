@@ -89,7 +89,7 @@ export class AuthService {
         }) //set refreshToken as cookie //HttpOnly: true chỈ đọc được ở server, client không lấy được //maxAge: milisecond, hết hạn auto xóa cookie trên client
         return {
           accessToken: this.jwtService.sign(payload),
-          user: { _id, name, email, role }
+          user: { _id, email, role }
         }
       } else {
       }
