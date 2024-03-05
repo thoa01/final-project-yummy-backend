@@ -27,7 +27,6 @@ export class UsersService {
     const { email, password } = user
     const hashPassword = this.hashPassword(password)
     const newRegister = await this.userModel.create({
-      name,
       email,
       password: hashPassword
     })
@@ -66,5 +65,9 @@ export class UsersService {
   remove(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) return 'Incorrect ID'
     return this.userModel.softDelete({ _id: id })
+  }
+
+  findUserByRefreshToken = async (refreshToken: string) => {
+    return await this.userModel.findOne({ refreshToken })
   }
 }
